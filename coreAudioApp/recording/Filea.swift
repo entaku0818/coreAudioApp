@@ -11,11 +11,21 @@ class AVFAudioRecorder: NSObject, AVAudioRecorderDelegate {
     var audioRecorder: AVAudioRecorder?
 
     func startRecording() {
+
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try audioSession.setActive(true)
+        } catch {
+            print("オーディオセッションの設定に失敗しました: \(error.localizedDescription)")
+            return
+        }
+
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
+            AVSampleRateKey: 44800,
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
@@ -31,8 +41,16 @@ class AVFAudioRecorder: NSObject, AVAudioRecorderDelegate {
     }
 
     func stopRecording() {
+
+
         audioRecorder?.stop()
         audioRecorder = nil
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setActive(false)
+        } catch {
+            print("オーディオセッションの非アクティブ化に失敗しました: \(error.localizedDescription)")
+        }
     }
 
     private func getDocumentsDirectory() -> URL {

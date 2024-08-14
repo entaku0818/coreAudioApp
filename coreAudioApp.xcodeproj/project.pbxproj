@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		618D9EEB2C6CF7C100BDC08C /* Filea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EEA2C6CF7C100BDC08C /* Filea.swift */; };
+		618D9EEE2C6CFFE300BDC08C /* AVFaudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EED2C6CFFE300BDC08C /* AVFaudio.swift */; };
+		618D9EF02C6D03C800BDC08C /* AudioEngineRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */; };
 		61E35DCA2C62F521008DB48B /* coreAudioAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DC92C62F521008DB48B /* coreAudioAppApp.swift */; };
 		61E35DCC2C62F521008DB48B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DCB2C62F521008DB48B /* ContentView.swift */; };
 		61E35DCE2C62F523008DB48B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E35DCD2C62F523008DB48B /* Assets.xcassets */; };
@@ -17,7 +19,6 @@
 		61E35DE72C62F523008DB48B /* coreAudioAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DE62C62F523008DB48B /* coreAudioAppUITestsLaunchTests.swift */; };
 		61E35DF42C62F54F008DB48B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DF32C62F54F008DB48B /* File.swift */; };
 		61E35DF62C62F576008DB48B /* File1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DF52C62F576008DB48B /* File1.swift */; };
-		61E35DF82C62F5CD008DB48B /* File２.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DF72C62F5CD008DB48B /* File２.swift */; };
 		61E35DFA2C62F67B008DB48B /* File4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DF92C62F67B008DB48B /* File4.swift */; };
 		61E35DFC2C62F6EE008DB48B /* AudioEffectProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DFB2C62F6EE008DB48B /* AudioEffectProcessor.swift */; };
 		61E35DFE2C62F77A008DB48B /* SystemSoundExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DFD2C62F77A008DB48B /* SystemSoundExample.swift */; };
@@ -42,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		618D9EEA2C6CF7C100BDC08C /* Filea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filea.swift; sourceTree = "<group>"; };
+		618D9EED2C6CFFE300BDC08C /* AVFaudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFaudio.swift; sourceTree = "<group>"; };
+		618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngineRecorder.swift; sourceTree = "<group>"; };
 		61E35DC62C62F521008DB48B /* coreAudioApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreAudioApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E35DC92C62F521008DB48B /* coreAudioAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreAudioAppApp.swift; sourceTree = "<group>"; };
 		61E35DCB2C62F521008DB48B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,7 +57,6 @@
 		61E35DE62C62F523008DB48B /* coreAudioAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreAudioAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		61E35DF32C62F54F008DB48B /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		61E35DF52C62F576008DB48B /* File1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File1.swift; sourceTree = "<group>"; };
-		61E35DF72C62F5CD008DB48B /* File２.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File２.swift"; sourceTree = "<group>"; };
 		61E35DF92C62F67B008DB48B /* File4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File4.swift; sourceTree = "<group>"; };
 		61E35DFB2C62F6EE008DB48B /* AudioEffectProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEffectProcessor.swift; sourceTree = "<group>"; };
 		61E35DFD2C62F77A008DB48B /* SystemSoundExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSoundExample.swift; sourceTree = "<group>"; };
@@ -85,6 +87,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		618D9EEC2C6CFD4800BDC08C /* recording */ = {
+			isa = PBXGroup;
+			children = (
+				618D9EED2C6CFFE300BDC08C /* AVFaudio.swift */,
+				618D9EEA2C6CF7C100BDC08C /* Filea.swift */,
+				61E35DF32C62F54F008DB48B /* File.swift */,
+				618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */,
+			);
+			path = recording;
+			sourceTree = "<group>";
+		};
 		61E35DBD2C62F521008DB48B = {
 			isa = PBXGroup;
 			children = (
@@ -112,10 +125,8 @@
 				61E35DCB2C62F521008DB48B /* ContentView.swift */,
 				61E35DCD2C62F523008DB48B /* Assets.xcassets */,
 				61E35DCF2C62F523008DB48B /* Preview Content */,
-				61E35DF32C62F54F008DB48B /* File.swift */,
-				618D9EEA2C6CF7C100BDC08C /* Filea.swift */,
+				618D9EEC2C6CFD4800BDC08C /* recording */,
 				61E35DF52C62F576008DB48B /* File1.swift */,
-				61E35DF72C62F5CD008DB48B /* File２.swift */,
 				61E35DF92C62F67B008DB48B /* File4.swift */,
 				61E35DFD2C62F77A008DB48B /* SystemSoundExample.swift */,
 				61E35DFB2C62F6EE008DB48B /* AudioEffectProcessor.swift */,
@@ -282,7 +293,8 @@
 				61E35DFE2C62F77A008DB48B /* SystemSoundExample.swift in Sources */,
 				618D9EEB2C6CF7C100BDC08C /* Filea.swift in Sources */,
 				61E35DF42C62F54F008DB48B /* File.swift in Sources */,
-				61E35DF82C62F5CD008DB48B /* File２.swift in Sources */,
+				618D9EF02C6D03C800BDC08C /* AudioEngineRecorder.swift in Sources */,
+				618D9EEE2C6CFFE300BDC08C /* AVFaudio.swift in Sources */,
 				61E35DCA2C62F521008DB48B /* coreAudioAppApp.swift in Sources */,
 				61E35DFC2C62F6EE008DB48B /* AudioEffectProcessor.swift in Sources */,
 				61E35DFA2C62F67B008DB48B /* File4.swift in Sources */,
@@ -453,6 +465,7 @@
 				DEVELOPMENT_TEAM = 4YZQY4C47E;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "このアプリでは、音声の録音のためにマイクを使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -482,6 +495,7 @@
 				DEVELOPMENT_TEAM = 4YZQY4C47E;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "このアプリでは、音声の録音のためにマイクを使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
