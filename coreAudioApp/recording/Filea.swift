@@ -65,7 +65,7 @@ class AVFAudioPlayer: NSObject, AVAudioPlayerDelegate {
     var audioPlayer: AVAudioPlayer?
 
     func startPlaying() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.caf")
 
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audioFilename)

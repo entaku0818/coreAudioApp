@@ -13,8 +13,22 @@ struct ContentView: View {
             
             VStack {
                 NavigationLink(destination: AVFaudioView()) {
-                    Text("Go to ContentView")
-                        .font(.title)
+                    Text("Go to AVFaudioView")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                NavigationLink(destination: AudioEngineView()) {
+                    Text("Go to AudioEngineView")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+
+                }
+                NavigationLink(destination: SystemSoundView()) {
+                    Text("Go to SystemSoundView")
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)

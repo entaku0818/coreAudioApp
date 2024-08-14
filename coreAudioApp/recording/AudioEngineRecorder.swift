@@ -18,7 +18,7 @@ class AudioEngineRecorder: NSObject {
         // オーディオセッションをアクティブに設定
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: [])
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
             try audioSession.setActive(true)
         } catch {
             print("オーディオセッションの設定に失敗しました: \(error.localizedDescription)")
