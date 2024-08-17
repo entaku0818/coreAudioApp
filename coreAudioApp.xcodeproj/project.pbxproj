@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		613430882C6E5A8C0053D0A8 /* a.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613430872C6E5A8C0053D0A8 /* a.swift */; };
 		618D9EEB2C6CF7C100BDC08C /* Filea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EEA2C6CF7C100BDC08C /* Filea.swift */; };
 		618D9EEE2C6CFFE300BDC08C /* AVFaudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EED2C6CFFE300BDC08C /* AVFaudioView.swift */; };
 		618D9EF02C6D03C800BDC08C /* AudioEngineRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		613430872C6E5A8C0053D0A8 /* a.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = a.swift; sourceTree = "<group>"; };
 		618D9EEA2C6CF7C100BDC08C /* Filea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filea.swift; sourceTree = "<group>"; };
 		618D9EED2C6CFFE300BDC08C /* AVFaudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFaudioView.swift; sourceTree = "<group>"; };
 		618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngineRecorder.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				618D9EEA2C6CF7C100BDC08C /* Filea.swift */,
 				61E35DF32C62F54F008DB48B /* File.swift */,
 				618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */,
+				613430872C6E5A8C0053D0A8 /* a.swift */,
 			);
 			path = recording;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				618D9EF02C6D03C800BDC08C /* AudioEngineRecorder.swift in Sources */,
 				618D9EEE2C6CFFE300BDC08C /* AVFaudioView.swift in Sources */,
 				61E35DCA2C62F521008DB48B /* coreAudioAppApp.swift in Sources */,
+				613430882C6E5A8C0053D0A8 /* a.swift in Sources */,
 				61E35DFC2C62F6EE008DB48B /* AudioEffectProcessor.swift in Sources */,
 				61E35DFA2C62F67B008DB48B /* File4.swift in Sources */,
 				61E35DF62C62F576008DB48B /* File1.swift in Sources */,
