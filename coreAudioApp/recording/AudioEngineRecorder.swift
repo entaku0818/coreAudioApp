@@ -14,7 +14,7 @@ class AudioEngineRecorder: NSObject {
     private var inputNode: AVAudioInputNode!
     private var isRecording = false
 
-    func startRecording() {
+    func startRecording(filename:String) {
         // オーディオセッションをアクティブに設定
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -30,7 +30,7 @@ class AudioEngineRecorder: NSObject {
         inputNode = audioEngine.inputNode
 
         let format = inputNode.outputFormat(forBus: 0)
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.caf")
+        let audioFilename = getDocumentsDirectory().appendingPathComponent(filename)
 
         do {
             audioFile = try AVAudioFile(forWriting: audioFilename, settings: format.settings)

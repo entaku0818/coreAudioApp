@@ -101,14 +101,14 @@ class AudioUnitManager {
         print("Audio unit setup completed")
     }
 
-    func startRecording() {
+    func startRecording(filename:String) {
         guard !isRecording, let audioUnit = audioUnit else {
             print("Recording already in progress or audio unit not set up")
             return
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let audioFilePath = documentsPath.appendingPathComponent("recording.caf")
+        let audioFilePath = documentsPath.appendingPathComponent(filename)
 
         var status = AudioFileCreateWithURL(
             audioFilePath as CFURL,
@@ -179,14 +179,14 @@ class AudioUnitManager {
         print("Audio file saved successfully")
     }
 
-    func startPlaying() {
+    func startPlaying(filename:String) {
         guard !isPlaying, let audioUnit = audioUnit else {
             print("Playback already in progress or audio unit not set up")
             return
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let audioFilePath = documentsPath.appendingPathComponent("recording.caf")
+        let audioFilePath = documentsPath.appendingPathComponent(filename)
 
         var status = AudioFileOpenURL(
             audioFilePath as CFURL,

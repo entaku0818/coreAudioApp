@@ -10,7 +10,7 @@ import AVFAudio
 class AVFAudioRecorder: NSObject, AVAudioRecorderDelegate {
     var audioRecorder: AVAudioRecorder?
 
-    func startRecording() {
+    func startRecording(filename:String) {
 
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -21,7 +21,7 @@ class AVFAudioRecorder: NSObject, AVAudioRecorderDelegate {
             return
         }
 
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
+        let audioFilename = getDocumentsDirectory().appendingPathComponent(filename)
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -64,8 +64,8 @@ import AVFoundation
 class AVFAudioPlayer: NSObject, AVAudioPlayerDelegate {
     var audioPlayer: AVAudioPlayer?
 
-    func startPlaying() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.caf")
+    func startPlaying(filename:String) {
+        let audioFilename = getDocumentsDirectory().appendingPathComponent(filename)
 
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audioFilename)

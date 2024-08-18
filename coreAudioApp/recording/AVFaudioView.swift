@@ -14,13 +14,16 @@ struct AVFaudioView: View {
     @State private var isRecording = false
     @State private var isPlaying = false
 
+    private let filename = "recording.caf"
+
+
     var body: some View {
         VStack(spacing: 20) {
             Button(action: {
                 if isRecording {
                     audioRecorder.stopRecording()
                 } else {
-                    audioRecorder.startRecording()
+                    audioRecorder.startRecording(filename: filename)
                 }
                 isRecording.toggle()
             }) {
@@ -36,7 +39,7 @@ struct AVFaudioView: View {
                 if isPlaying {
                     audioPlayer.stopPlaying()
                 } else {
-                    audioPlayer.startPlaying()
+                    audioPlayer.startPlaying(filename: filename)
                 }
                 isPlaying.toggle()
             }) {

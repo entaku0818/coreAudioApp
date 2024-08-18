@@ -42,14 +42,14 @@ class AudioManager {
         return format
     }()
 
-    func startRecording() {
+    func startRecording(filename:String) {
         guard !isRecording else {
             logger.warning("Recording already in progress")
             return
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let audioFilePath = documentsPath.appendingPathComponent("recording.caf")
+        let audioFilePath = documentsPath.appendingPathComponent(filename)
 
         var audioFile: AudioFileID?
         let createStatus = AudioFileCreateWithURL(audioFilePath as CFURL, kAudioFileCAFType, &recordingFormat, .eraseFile, &audioFile)
@@ -124,14 +124,14 @@ class AudioManager {
         logger.info("Recording stopped successfully")
     }
 
-    func startPlaying() {
+    func startPlaying(filename:String) {
         guard !isPlaying else {
             logger.warning("Playback already in progress")
             return
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let audioFilePath = documentsPath.appendingPathComponent("recording.caf")
+        let audioFilePath = documentsPath.appendingPathComponent(filename)
 
         var audioFile: AudioFileID?
         var status = AudioFileOpenURL(audioFilePath as CFURL, .readPermission, kAudioFileCAFType, &audioFile)
