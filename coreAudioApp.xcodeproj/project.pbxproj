@@ -12,9 +12,9 @@
 		618D9EEE2C6CFFE300BDC08C /* AVFaudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EED2C6CFFE300BDC08C /* AVFaudioView.swift */; };
 		618D9EF02C6D03C800BDC08C /* AudioEngineRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */; };
 		618D9EF22C6D04BD00BDC08C /* AVaudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EF12C6D04BD00BDC08C /* AVaudioView.swift */; };
-		618D9EF52C6D095300BDC08C /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EF42C6D095300BDC08C /* SwiftUIView.swift */; };
+		618D9EF52C6D095300BDC08C /* SystemSoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EF42C6D095300BDC08C /* SystemSoundView.swift */; };
 		61B186B22C71986400ADF7DB /* AudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B186B12C71986400ADF7DB /* AudioUnit.swift */; };
-		61B186B42C7199BB00ADF7DB /* CoreAudioViewa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B186B32C7199BB00ADF7DB /* CoreAudioViewa.swift */; };
+		61B186B42C7199BB00ADF7DB /* AudioUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B186B32C7199BB00ADF7DB /* AudioUnitView.swift */; };
 		61E35DCA2C62F521008DB48B /* coreAudioAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DC92C62F521008DB48B /* coreAudioAppApp.swift */; };
 		61E35DCC2C62F521008DB48B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DCB2C62F521008DB48B /* ContentView.swift */; };
 		61E35DCE2C62F523008DB48B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E35DCD2C62F523008DB48B /* Assets.xcassets */; };
@@ -52,9 +52,9 @@
 		618D9EED2C6CFFE300BDC08C /* AVFaudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFaudioView.swift; sourceTree = "<group>"; };
 		618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngineRecorder.swift; sourceTree = "<group>"; };
 		618D9EF12C6D04BD00BDC08C /* AVaudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVaudioView.swift; sourceTree = "<group>"; };
-		618D9EF42C6D095300BDC08C /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		618D9EF42C6D095300BDC08C /* SystemSoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSoundView.swift; sourceTree = "<group>"; };
 		61B186B12C71986400ADF7DB /* AudioUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnit.swift; sourceTree = "<group>"; };
-		61B186B32C7199BB00ADF7DB /* CoreAudioViewa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreAudioViewa.swift; sourceTree = "<group>"; };
+		61B186B32C7199BB00ADF7DB /* AudioUnitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitView.swift; sourceTree = "<group>"; };
 		61E35DC62C62F521008DB48B /* coreAudioApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreAudioApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E35DC92C62F521008DB48B /* coreAudioAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreAudioAppApp.swift; sourceTree = "<group>"; };
 		61E35DCB2C62F521008DB48B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 				61E35DF32C62F54F008DB48B /* AudioManager.swift */,
 				618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */,
 				613430872C6E5A8C0053D0A8 /* CoreAudioView.swift */,
-				61B186B32C7199BB00ADF7DB /* CoreAudioViewa.swift */,
+				61B186B32C7199BB00ADF7DB /* AudioUnitView.swift */,
 				61B186B12C71986400ADF7DB /* AudioUnit.swift */,
 			);
 			path = recording;
@@ -116,7 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				61E35DFD2C62F77A008DB48B /* SystemSoundExample.swift */,
-				618D9EF42C6D095300BDC08C /* SwiftUIView.swift */,
+				618D9EF42C6D095300BDC08C /* SystemSoundView.swift */,
 			);
 			path = systemsound;
 			sourceTree = "<group>";
@@ -312,10 +312,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61B186B42C7199BB00ADF7DB /* CoreAudioViewa.swift in Sources */,
+				61B186B42C7199BB00ADF7DB /* AudioUnitView.swift in Sources */,
 				618D9EF22C6D04BD00BDC08C /* AVaudioView.swift in Sources */,
 				61E35DCC2C62F521008DB48B /* ContentView.swift in Sources */,
-				618D9EF52C6D095300BDC08C /* SwiftUIView.swift in Sources */,
+				618D9EF52C6D095300BDC08C /* SystemSoundView.swift in Sources */,
 				61E35DFE2C62F77A008DB48B /* SystemSoundExample.swift in Sources */,
 				618D9EEB2C6CF7C100BDC08C /* AVFAudioRecorder.swift in Sources */,
 				61E35DF42C62F54F008DB48B /* AudioManager.swift in Sources */,

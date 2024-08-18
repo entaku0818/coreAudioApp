@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AudioUnitView: View {
     private var audioManager = AudioUnitManager()
-
+    private var audioPlayer = AVFAudioPlayer()
     @State private var isRecording = false
     @State private var isPlaying = false
 
@@ -34,9 +34,9 @@ struct AudioUnitView: View {
 
             Button(action: {
                 if isPlaying {
-                    audioManager.stopPlaying()
+                    audioPlayer.stopPlaying()
                 } else {
-                    audioManager.startPlaying()
+                    audioPlayer.startPlaying()
                 }
                 isPlaying.toggle()
             }) {

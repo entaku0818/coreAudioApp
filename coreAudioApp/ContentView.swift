@@ -34,6 +34,13 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
+                NavigationLink(destination: AudioUnitView()) {
+                    Text("Go to AudioUnitView")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
                 NavigationLink(destination: SystemSoundView()) {
                     Text("Go to SystemSoundView")
                         .padding()

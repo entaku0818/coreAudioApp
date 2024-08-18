@@ -1,37 +1,25 @@
-//
-//  AudioUnit.swift
-//  coreAudioApp
-//
-//  Created by 遠藤拓弥 on 2024/08/18.
-//
-
-import Foundation
-import Foundation
-import AudioToolbox
 import AVFoundation
-import os.log
+import AudioToolbox
 
 class AudioUnitManager {
-    private var audioUnit: AudioUnit?
-    private var recordingFile: AudioFileID?
-    private var playbackFile: AudioFileID?
+    private(set) var audioUnit: AudioComponentInstance?
+    private(set) var audioFile: AudioFileID?
     private var isRecording = false
     private var isPlaying = false
-    private var currentPacket: Int64 = 0
-    private var audioFileSize: Int64 = 0
+    private var recordedAudioBuffer: [Float] = []
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "AudioUnitManager", category: "AudioRecording")
-
-    private var recordingFormat: AudioStreamBasicDescription = {
-        var format = AudioStreamBasicDescription()
-        format.mSampleRate = 44100.0
-        format.mFormatID = kAudioFormatLinearPCM
-        format.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked
-        format.mBitsPerChannel = 16
-        format.mChannelsPerFrame = 1
-        format.mFramesPerPacket = 1
-        format.mBytesPerFrame = 2
-        format.mBytesPerPacket = 2
+    private var audioFormat: AudioStreamBasicDescription = {
+        var format = AudioStreamBasicDescription(
+            mSampleRate: 44100,
+            mFormatID: kAudioFormatLinearPCM,
+            mFormatFlags: kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked,
+            mBytesPerPacket: 4,
+            mFramesPerPacket: 1,
+            mBytesPerFrame: 4,
+            mChannelsPerFrame: 1,
+            mBitsPerChannel: 32,
+            mReserved: 0
+        )
         return format
     }()
 
@@ -42,12 +30,12 @@ class AudioUnitManager {
 
     private func setupAudioSession() {
         do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .mixWithOthers])
-            try session.setActive(true)
-            logger.info("Audio session setup completed")
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try audioSession.setActive(true)
+            print("Audio session setup completed")
         } catch {
-            logger.error("Failed to setup audio session: \(error.localizedDescription)")
+            print("Failed to set up audio session: \(error)")
         }
     }
 
@@ -61,26 +49,36 @@ class AudioUnitManager {
         )
 
         guard let audioComponent = AudioComponentFindNext(nil, &audioComponentDescription) else {
-            logger.error("Failed to find audio component")
+            print("Failed to find audio component")
             return
         }
 
         var status = AudioComponentInstanceNew(audioComponent, &audioUnit)
         guard status == noErr else {
-            logger.error("Failed to create audio unit instance: \(status)")
+            print("Failed to create audio unit: \(status)")
             return
         }
 
-        var enableIO: UInt32 = 1
-        status = AudioUnitSetProperty(audioUnit!, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input, 1, &enableIO, UInt32(MemoryLayout<UInt32>.size))
+        var oneFlag: UInt32 = 1
+        status = AudioUnitSetProperty(audioUnit!,
+                                      kAudioOutputUnitProperty_EnableIO,
+                                      kAudioUnitScope_Input,
+                                      1,
+                                      &oneFlag,
+                                      UInt32(MemoryLayout<UInt32>.size))
         guard status == noErr else {
-            logger.error("Failed to enable input on audio unit: \(status)")
+            print("Failed to enable audio input: \(status)")
             return
         }
 
-        status = AudioUnitSetProperty(audioUnit!, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &recordingFormat, UInt32(MemoryLayout<AudioStreamBasicDescription>.size))
+        status = AudioUnitSetProperty(audioUnit!,
+                                      kAudioUnitProperty_StreamFormat,
+                                      kAudioUnitScope_Output,
+                                      1,
+                                      &audioFormat,
+                                      UInt32(MemoryLayout<AudioStreamBasicDescription>.size))
         guard status == noErr else {
-            logger.error("Failed to set stream format: \(status)")
+            print("Failed to set stream format: \(status)")
             return
         }
 
@@ -88,192 +86,232 @@ class AudioUnitManager {
             inputProc: recordingCallback,
             inputProcRefCon: Unmanaged.passUnretained(self).toOpaque()
         )
-        status = AudioUnitSetProperty(audioUnit!, kAudioOutputUnitProperty_SetInputCallback, kAudioUnitScope_Global, 0, &callbackStruct, UInt32(MemoryLayout<AURenderCallbackStruct>.size))
+
+        status = AudioUnitSetProperty(audioUnit!,
+                                      kAudioOutputUnitProperty_SetInputCallback,
+                                      kAudioUnitScope_Global,
+                                      0,
+                                      &callbackStruct,
+                                      UInt32(MemoryLayout<AURenderCallbackStruct>.size))
         guard status == noErr else {
-            logger.error("Failed to set recording callback: \(status)")
+            print("Failed to set recording callback: \(status)")
             return
         }
 
-        status = AudioUnitInitialize(audioUnit!)
-        guard status == noErr else {
-            logger.error("Failed to initialize audio unit: \(status)")
-            return
-        }
-
-        logger.info("Audio unit setup completed successfully")
+        print("Audio unit setup completed")
     }
 
     func startRecording() {
-        guard !isRecording else {
-            logger.warning("Recording already in progress")
+        guard !isRecording, let audioUnit = audioUnit else {
+            print("Recording already in progress or audio unit not set up")
             return
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let audioFilePath = documentsPath.appendingPathComponent("recording.caf")
 
-        var audioFile: AudioFileID?
-        let createStatus = AudioFileCreateWithURL(audioFilePath as CFURL, kAudioFileCAFType, &recordingFormat, .eraseFile, &audioFile)
-        guard createStatus == noErr else {
-            logger.error("Failed to create audio file: \(createStatus)")
+        var status = AudioFileCreateWithURL(
+            audioFilePath as CFURL,
+            kAudioFileCAFType,
+            &audioFormat,
+            .eraseFile,
+            &audioFile
+        )
+        guard status == noErr else {
+            print("Failed to create audio file: \(status)")
             return
         }
-        recordingFile = audioFile
-        logger.info("Audio file created successfully")
 
-        let status = AudioOutputUnitStart(audioUnit!)
+        recordedAudioBuffer.removeAll()
+        status = AudioOutputUnitStart(audioUnit)
         guard status == noErr else {
-            logger.error("Failed to start audio unit: \(status)")
+            print("Failed to start audio unit: \(status)")
             return
         }
 
         isRecording = true
-        currentPacket = 0
-        logger.info("Recording started successfully")
+        print("Recording started")
     }
 
     func stopRecording() {
-        guard isRecording else {
-            logger.warning("No recording in progress to stop")
+        guard isRecording, let audioUnit = audioUnit else {
+            print("No recording in progress or audio unit not set up")
             return
         }
 
-        let status = AudioOutputUnitStop(audioUnit!)
+        let status = AudioOutputUnitStop(audioUnit)
         guard status == noErr else {
-            logger.error("Failed to stop audio unit: \(status)")
+            print("Failed to stop audio unit: \(status)")
             return
         }
 
-        AudioFileClose(recordingFile!)
+        saveRecordingToFile()
+
         isRecording = false
-        logger.info("Recording stopped successfully")
+        print("Recording stopped")
+    }
+
+    private func saveRecordingToFile() {
+        guard let audioFile = audioFile else {
+            print("No audio file to save")
+            return
+        }
+
+        var bufferByteSize = UInt32(recordedAudioBuffer.count * MemoryLayout<Float>.size)
+        var status = AudioFileWriteBytes(
+            audioFile,
+            false,
+            0,
+            &bufferByteSize,
+            recordedAudioBuffer
+        )
+        guard status == noErr else {
+            print("Failed to write audio data: \(status)")
+            return
+        }
+
+        status = AudioFileClose(audioFile)
+        guard status == noErr else {
+            print("Failed to close audio file: \(status)")
+            return
+        }
+
+        print("Audio file saved successfully")
     }
 
     func startPlaying() {
-        guard !isPlaying else {
-            logger.warning("Playback already in progress")
+        guard !isPlaying, let audioUnit = audioUnit else {
+            print("Playback already in progress or audio unit not set up")
             return
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let audioFilePath = documentsPath.appendingPathComponent("recording.caf")
 
-        var audioFile: AudioFileID?
-        var status = AudioFileOpenURL(audioFilePath as CFURL, .readPermission, kAudioFileCAFType, &audioFile)
+        var status = AudioFileOpenURL(
+            audioFilePath as CFURL,
+            .readPermission,
+            kAudioFileCAFType,
+            &audioFile
+        )
         guard status == noErr else {
-            logger.error("Failed to open audio file for playback: \(status)")
+            print("Failed to open audio file for playback: \(status)")
             return
         }
-        playbackFile = audioFile
-
-        var dataSize: UInt64 = 0
-        var propertySize = UInt32(MemoryLayout<UInt64>.size)
-        status = AudioFileGetProperty(playbackFile!, kAudioFilePropertyAudioDataByteCount, &propertySize, &dataSize)
-        guard status == noErr else {
-            logger.error("Failed to get audio file size: \(status)")
-            return
-        }
-        audioFileSize = Int64(dataSize)
 
         var callbackStruct = AURenderCallbackStruct(
             inputProc: playbackCallback,
             inputProcRefCon: Unmanaged.passUnretained(self).toOpaque()
         )
-        status = AudioUnitSetProperty(audioUnit!, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &callbackStruct, UInt32(MemoryLayout<AURenderCallbackStruct>.size))
+
+        status = AudioUnitSetProperty(audioUnit,
+                                      kAudioUnitProperty_SetRenderCallback,
+                                      kAudioUnitScope_Input,
+                                      0,
+                                      &callbackStruct,
+                                      UInt32(MemoryLayout<AURenderCallbackStruct>.size))
         guard status == noErr else {
-            logger.error("Failed to set playback callback: \(status)")
+            print("Failed to set playback callback: \(status)")
             return
         }
 
-        status = AudioOutputUnitStart(audioUnit!)
+        status = AudioOutputUnitStart(audioUnit)
         guard status == noErr else {
-            logger.error("Failed to start audio unit for playback: \(status)")
+            print("Failed to start audio unit for playback: \(status)")
             return
         }
 
         isPlaying = true
-        currentPacket = 0
-        logger.info("Playback started successfully")
+        print("Playback started")
     }
 
     func stopPlaying() {
-        guard isPlaying else {
-            logger.warning("No playback in progress to stop")
+        guard isPlaying, let audioUnit = audioUnit else {
+            print("No playback in progress or audio unit not set up")
             return
         }
 
-        let status = AudioOutputUnitStop(audioUnit!)
+        let status = AudioOutputUnitStop(audioUnit)
         guard status == noErr else {
-            logger.error("Failed to stop audio unit: \(status)")
+            print("Failed to stop audio unit for playback: \(status)")
             return
         }
 
-        AudioFileClose(playbackFile!)
+        if let audioFile = audioFile {
+            AudioFileClose(audioFile)
+        }
+
         isPlaying = false
-        logger.info("Playback stopped successfully")
+        print("Playback stopped")
     }
 
-    private let recordingCallback: AURenderCallback = { inRefCon, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, ioData in
-        let audioManager = Unmanaged<AudioUnitManager>.fromOpaque(inRefCon).takeUnretainedValue()
-        guard audioManager.isRecording, let recordingFile = audioManager.recordingFile else { return noErr }
+    func appendAudioData(_ data: [Float]) {
+        recordedAudioBuffer.append(contentsOf: data)
+    }
+}
 
-        var bufferList = AudioBufferList(
-            mNumberBuffers: 1,
-            mBuffers: AudioBuffer(
-                mNumberChannels: 1,
-                mDataByteSize: UInt32(inNumberFrames * 2),
-                mData: nil
-            )
+func recordingCallback(inRefCon: UnsafeMutableRawPointer,
+                       ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
+                       inTimeStamp: UnsafePointer<AudioTimeStamp>,
+                       inBusNumber: UInt32,
+                       inNumberFrames: UInt32,
+                       ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
+    let audioRecorderPlayer = Unmanaged<AudioUnitManager>.fromOpaque(inRefCon).takeUnretainedValue()
+
+    guard let audioUnit = audioRecorderPlayer.audioUnit else {
+        print("Audio unit not available in recording callback")
+        return kAudioUnitErr_InvalidProperty
+    }
+
+    var bufferList = AudioBufferList(
+        mNumberBuffers: 1,
+        mBuffers: AudioBuffer(
+            mNumberChannels: 1,
+            mDataByteSize: inNumberFrames * 4,
+            mData: nil
         )
+    )
 
-        let status = AudioUnitRender(audioManager.audioUnit!, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, &bufferList)
-        guard status == noErr else {
-            audioManager.logger.error("Failed to render audio: \(status)")
-            return status
-        }
+    let status = AudioUnitRender(audioUnit,
+                                 ioActionFlags,
+                                 inTimeStamp,
+                                 inBusNumber,
+                                 inNumberFrames,
+                                 &bufferList)
 
-        var inNumberPackets = inNumberFrames
-        AudioFileWritePackets(recordingFile, false, inNumberFrames * 2,
-                              nil, audioManager.currentPacket, &inNumberPackets,
-                              bufferList.mBuffers.mData!)
-        audioManager.currentPacket += Int64(inNumberPackets)
+    if status == noErr {
+        let buffer = bufferList.mBuffers
+        let samples = buffer.mData?.assumingMemoryBound(to: Float.self)
+        let count = Int(buffer.mDataByteSize) / MemoryLayout<Float>.size
 
+        let audioData = Array(UnsafeBufferPointer(start: samples, count: count))
+        audioRecorderPlayer.appendAudioData(audioData)
+    }
+
+    return status
+}
+
+func playbackCallback(inRefCon: UnsafeMutableRawPointer,
+                      ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
+                      inTimeStamp: UnsafePointer<AudioTimeStamp>,
+                      inBusNumber: UInt32,
+                      inNumberFrames: UInt32,
+                      ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
+    let audioRecorderPlayer = Unmanaged<AudioUnitManager>.fromOpaque(inRefCon).takeUnretainedValue()
+
+    guard let ioData = ioData, let audioFile = audioRecorderPlayer.audioFile else {
+        print("Audio file or ioData not available in playback callback")
         return noErr
     }
 
-    private let playbackCallback: AURenderCallback = { inRefCon, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, ioData in
-        let audioManager = Unmanaged<AudioUnitManager>.fromOpaque(inRefCon).takeUnretainedValue()
-        guard audioManager.isPlaying, let playbackFile = audioManager.playbackFile, let ioData = ioData else { return noErr }
+    var buffer = ioData.pointee.mBuffers
 
-        let bufferList = UnsafeMutableAudioBufferListPointer(ioData)
-        var numPackets = inNumberFrames
-        var numBytes = UInt32(inNumberFrames * audioManager.recordingFormat.mBytesPerFrame)
-
-        for i in 0..<bufferList.count {
-            if let mData = bufferList[i].mData {
-                let status = AudioFileReadPackets(playbackFile, false, &numBytes,
-                                                  nil, audioManager.currentPacket, &numPackets,
-                                                  mData)
-                if status != noErr {
-                    audioManager.logger.error("Failed to read packets: \(status)")
-                    return status
-                }
-            }
-        }
-
-        if numPackets > 0 {
-            audioManager.currentPacket += Int64(numPackets)
-            for i in 0..<bufferList.count {
-                bufferList[i].mDataByteSize = numBytes
-            }
-        } else {
-            for i in 0..<bufferList.count {
-                bufferList[i].mDataByteSize = 0
-            }
-            audioManager.stopPlaying()
-        }
-
-        return noErr
-    }
-
+    var packetCount: UInt32 = inNumberFrames
+    return AudioFileReadPacketData(audioFile,
+                                   false,
+                                   &buffer.mDataByteSize,
+                                   nil,
+                                   0,
+                                   &packetCount,
+                                   buffer.mData)
 }
