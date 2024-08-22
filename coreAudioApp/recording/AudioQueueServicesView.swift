@@ -1,28 +1,29 @@
 //
-//  AVFaudio.swift
+//  a.swift
 //  coreAudioApp
 //
-//  Created by 遠藤拓弥 on 2024/08/15.
+//  Created by 遠藤拓弥 on 2024/08/16.
 //
 
 import Foundation
 import SwiftUI
-struct AudioEngineView: View {
-    private var audioRecorder = AudioEngineRecorder()
-    private var audioPlayer = AVFAudioPlayer()
+
+struct AudioQueueServicesView: View {
+    private var audioQueueServices = AudioQueueServices()
 
     @State private var isRecording = false
     @State private var isPlaying = false
 
     private let filename = "recording.caf"
 
+
     var body: some View {
         VStack(spacing: 20) {
             Button(action: {
                 if isRecording {
-                    audioRecorder.stopRecording()
+                    audioQueueServices.stopRecording()
                 } else {
-                    audioRecorder.startRecording(filename: filename)
+                    audioQueueServices.startRecording(filename: filename)
                 }
                 isRecording.toggle()
             }) {
@@ -36,9 +37,9 @@ struct AudioEngineView: View {
 
             Button(action: {
                 if isPlaying {
-                    audioPlayer.stopPlaying()
+                    audioQueueServices.stopPlaying()
                 } else {
-                    audioPlayer.startPlaying(filename: filename)
+                    audioQueueServices.startPlaying(filename: filename)
                 }
                 isPlaying.toggle()
             }) {
