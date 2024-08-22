@@ -11,6 +11,8 @@ class AudioQueueServices {
     private var isPlaying = false
     internal var currentPacket: Int64 = 0
 
+    private var recordingGain: Float32 = 1.0  // 録音ゲイン（1.0 = 100%）
+    private var playbackVolume: Float32 = 1.0  // 再生音量（1.0 = 100%）
     private var audioFileSize: Int64 = 0
 
 

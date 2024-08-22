@@ -95,19 +95,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		618D9EEC2C6CFD4800BDC08C /* recording */ = {
+		6176AAF12C7803680061F87D /* AVFaudioView */ = {
 			isa = PBXGroup;
 			children = (
-				618D9EED2C6CFFE300BDC08C /* AVFaudioView.swift */,
-				618D9EF12C6D04BD00BDC08C /* AudioEngineView.swift */,
 				618D9EEA2C6CF7C100BDC08C /* AVFAudioRecorder.swift */,
-				61E35DF32C62F54F008DB48B /* AudioQueueServices.swift */,
+				618D9EED2C6CFFE300BDC08C /* AVFaudioView.swift */,
+			);
+			path = AVFaudioView;
+			sourceTree = "<group>";
+		};
+		6176AAF22C7804460061F87D /* AudioEngineView */ = {
+			isa = PBXGroup;
+			children = (
+				618D9EF12C6D04BD00BDC08C /* AudioEngineView.swift */,
 				618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */,
-				613430872C6E5A8C0053D0A8 /* AudioQueueServicesView.swift */,
+			);
+			path = AudioEngineView;
+			sourceTree = "<group>";
+		};
+		6176AAF32C78058D0061F87D /* AudioUnit */ = {
+			isa = PBXGroup;
+			children = (
 				61B186B32C7199BB00ADF7DB /* AudioUnitView.swift */,
 				61B186B12C71986400ADF7DB /* AudioUnitManager.swift */,
 			);
-			path = recording;
+			path = AudioUnit;
+			sourceTree = "<group>";
+		};
+		618D9EEC2C6CFD4800BDC08C /* AudioQueueServices */ = {
+			isa = PBXGroup;
+			children = (
+				613430872C6E5A8C0053D0A8 /* AudioQueueServicesView.swift */,
+				61E35DF32C62F54F008DB48B /* AudioQueueServices.swift */,
+			);
+			path = AudioQueueServices;
 			sourceTree = "<group>";
 		};
 		618D9EF32C6D093E00BDC08C /* systemsound */ = {
@@ -147,7 +168,10 @@
 				61E35DCD2C62F523008DB48B /* Assets.xcassets */,
 				61B186B72C71E14700ADF7DB /* fanfare.wav */,
 				61E35DCF2C62F523008DB48B /* Preview Content */,
-				618D9EEC2C6CFD4800BDC08C /* recording */,
+				6176AAF12C7803680061F87D /* AVFaudioView */,
+				6176AAF22C7804460061F87D /* AudioEngineView */,
+				618D9EEC2C6CFD4800BDC08C /* AudioQueueServices */,
+				6176AAF32C78058D0061F87D /* AudioUnit */,
 				618D9EF32C6D093E00BDC08C /* systemsound */,
 				61E35DFB2C62F6EE008DB48B /* AudioEffectProcessor.swift */,
 			);

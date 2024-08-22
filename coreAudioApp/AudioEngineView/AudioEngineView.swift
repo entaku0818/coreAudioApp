@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-struct AudioEngineRecorderView: View {
+struct AudioEngineView: View {
     private var audioRecorder = AudioEngineRecorder()
 
     @State private var isRecording = false
