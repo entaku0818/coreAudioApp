@@ -13,7 +13,7 @@
 		618D9EF02C6D03C800BDC08C /* AudioEngineRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */; };
 		618D9EF22C6D04BD00BDC08C /* AVaudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EF12C6D04BD00BDC08C /* AVaudioView.swift */; };
 		618D9EF52C6D095300BDC08C /* SystemSoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D9EF42C6D095300BDC08C /* SystemSoundView.swift */; };
-		61B186B22C71986400ADF7DB /* AudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B186B12C71986400ADF7DB /* AudioUnit.swift */; };
+		61B186B22C71986400ADF7DB /* AudioUnitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B186B12C71986400ADF7DB /* AudioUnitManager.swift */; };
 		61B186B42C7199BB00ADF7DB /* AudioUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B186B32C7199BB00ADF7DB /* AudioUnitView.swift */; };
 		61B186B82C71E14700ADF7DB /* fanfare.wav in Resources */ = {isa = PBXBuildFile; fileRef = 61B186B72C71E14700ADF7DB /* fanfare.wav */; };
 		61E35DCA2C62F521008DB48B /* coreAudioAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DC92C62F521008DB48B /* coreAudioAppApp.swift */; };
@@ -24,7 +24,6 @@
 		61E35DE52C62F523008DB48B /* coreAudioAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DE42C62F523008DB48B /* coreAudioAppUITests.swift */; };
 		61E35DE72C62F523008DB48B /* coreAudioAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DE62C62F523008DB48B /* coreAudioAppUITestsLaunchTests.swift */; };
 		61E35DF42C62F54F008DB48B /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DF32C62F54F008DB48B /* AudioManager.swift */; };
-		61E35DFA2C62F67B008DB48B /* File4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DF92C62F67B008DB48B /* File4.swift */; };
 		61E35DFC2C62F6EE008DB48B /* AudioEffectProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DFB2C62F6EE008DB48B /* AudioEffectProcessor.swift */; };
 		61E35DFE2C62F77A008DB48B /* SystemSoundExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E35DFD2C62F77A008DB48B /* SystemSoundExample.swift */; };
 /* End PBXBuildFile section */
@@ -53,7 +52,7 @@
 		618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngineRecorder.swift; sourceTree = "<group>"; };
 		618D9EF12C6D04BD00BDC08C /* AVaudioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVaudioView.swift; sourceTree = "<group>"; };
 		618D9EF42C6D095300BDC08C /* SystemSoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSoundView.swift; sourceTree = "<group>"; };
-		61B186B12C71986400ADF7DB /* AudioUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnit.swift; sourceTree = "<group>"; };
+		61B186B12C71986400ADF7DB /* AudioUnitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitManager.swift; sourceTree = "<group>"; };
 		61B186B32C7199BB00ADF7DB /* AudioUnitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitView.swift; sourceTree = "<group>"; };
 		61B186B72C71E14700ADF7DB /* fanfare.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fanfare.wav; sourceTree = "<group>"; };
 		61E35DC62C62F521008DB48B /* coreAudioApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreAudioApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,7 +66,6 @@
 		61E35DE42C62F523008DB48B /* coreAudioAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreAudioAppUITests.swift; sourceTree = "<group>"; };
 		61E35DE62C62F523008DB48B /* coreAudioAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreAudioAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		61E35DF32C62F54F008DB48B /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		61E35DF92C62F67B008DB48B /* File4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File4.swift; sourceTree = "<group>"; };
 		61E35DFB2C62F6EE008DB48B /* AudioEffectProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEffectProcessor.swift; sourceTree = "<group>"; };
 		61E35DFD2C62F77A008DB48B /* SystemSoundExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSoundExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,7 +105,7 @@
 				618D9EEF2C6D03C800BDC08C /* AudioEngineRecorder.swift */,
 				613430872C6E5A8C0053D0A8 /* CoreAudioView.swift */,
 				61B186B32C7199BB00ADF7DB /* AudioUnitView.swift */,
-				61B186B12C71986400ADF7DB /* AudioUnit.swift */,
+				61B186B12C71986400ADF7DB /* AudioUnitManager.swift */,
 			);
 			path = recording;
 			sourceTree = "<group>";
@@ -149,9 +147,9 @@
 				61E35DCD2C62F523008DB48B /* Assets.xcassets */,
 				61B186B72C71E14700ADF7DB /* fanfare.wav */,
 				61E35DCF2C62F523008DB48B /* Preview Content */,
+				61F1D4BA2C739ED8009E4CFC /* advance */,
 				618D9EEC2C6CFD4800BDC08C /* recording */,
 				618D9EF32C6D093E00BDC08C /* systemsound */,
-				61E35DF92C62F67B008DB48B /* File4.swift */,
 				61E35DFB2C62F6EE008DB48B /* AudioEffectProcessor.swift */,
 			);
 			path = coreAudioApp;
@@ -180,6 +178,13 @@
 				61E35DE62C62F523008DB48B /* coreAudioAppUITestsLaunchTests.swift */,
 			);
 			path = coreAudioAppUITests;
+			sourceTree = "<group>";
+		};
+		61F1D4BA2C739ED8009E4CFC /* advance */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = advance;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,13 +325,12 @@
 				61E35DFE2C62F77A008DB48B /* SystemSoundExample.swift in Sources */,
 				618D9EEB2C6CF7C100BDC08C /* AVFAudioRecorder.swift in Sources */,
 				61E35DF42C62F54F008DB48B /* AudioManager.swift in Sources */,
-				61B186B22C71986400ADF7DB /* AudioUnit.swift in Sources */,
+				61B186B22C71986400ADF7DB /* AudioUnitManager.swift in Sources */,
 				618D9EF02C6D03C800BDC08C /* AudioEngineRecorder.swift in Sources */,
 				618D9EEE2C6CFFE300BDC08C /* AVFaudioView.swift in Sources */,
 				61E35DCA2C62F521008DB48B /* coreAudioAppApp.swift in Sources */,
 				613430882C6E5A8C0053D0A8 /* CoreAudioView.swift in Sources */,
 				61E35DFC2C62F6EE008DB48B /* AudioEffectProcessor.swift in Sources */,
-				61E35DFA2C62F67B008DB48B /* File4.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

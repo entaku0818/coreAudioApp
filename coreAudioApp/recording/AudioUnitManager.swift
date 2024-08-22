@@ -256,9 +256,9 @@ func recordingCallback(inRefCon: UnsafeMutableRawPointer,
                        inBusNumber: UInt32,
                        inNumberFrames: UInt32,
                        ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
-    let audioRecorderPlayer = Unmanaged<AudioUnitManager>.fromOpaque(inRefCon).takeUnretainedValue()
+    let audioUnitManager = Unmanaged<AudioUnitManager>.fromOpaque(inRefCon).takeUnretainedValue()
 
-    guard let audioUnit = audioRecorderPlayer.audioUnit else {
+    guard let audioUnit = audioUnitManager.audioUnit else {
         print("Audio unit not available in recording callback")
         return kAudioUnitErr_InvalidProperty
     }
@@ -285,7 +285,7 @@ func recordingCallback(inRefCon: UnsafeMutableRawPointer,
         let count = Int(buffer.mDataByteSize) / MemoryLayout<Float>.size
 
         let audioData = Array(UnsafeBufferPointer(start: samples, count: count))
-        audioRecorderPlayer.appendAudioData(audioData)
+        audioUnitManager.appendAudioData(audioData)
     }
 
     return status
