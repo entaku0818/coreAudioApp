@@ -6,7 +6,7 @@
 - AVFaudioView
  - AVAudioRecorder/AVAudioPlayerを利用した音声収録再生の事例
 - AudioEngineView
-　　-　AudioEngineを利用した音声収録の事例
+ -　AudioEngineを利用した音声収録の事例
 - AudioQueueServicesView
 　　-　AudioQueueServicesを利用した音声収録の事例
 - AudioUnitView
