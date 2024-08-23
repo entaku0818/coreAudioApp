@@ -16,18 +16,9 @@ class AudioQueueServices {
     private var audioFileSize: Int64 = 0
 
 
-    internal let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "AudioManager", category: "AudioRecording")
+    internal let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "AudioQueueServices", category: "AudioRecording")
 
-    init() {
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .mixWithOthers])
-            try session.setActive(true)
-            logger.info("Audio session setup completed")
-        } catch {
-            logger.error("Failed to setup audio session: \(error.localizedDescription)")
-        }
-    }
+
 
     private var recordingFormat: AudioStreamBasicDescription = {
         var format = AudioStreamBasicDescription()
@@ -46,6 +37,15 @@ class AudioQueueServices {
         guard !isRecording else {
             logger.warning("Recording already in progress")
             return
+        }
+
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .mixWithOthers])
+            try session.setActive(true)
+            logger.info("Audio session setup completed")
+        } catch {
+            logger.error("Failed to setup audio session: \(error.localizedDescription)")
         }
 
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -284,7 +284,7 @@ class AudioQueueServices {
 
 let audioQueueInputCallback: AudioQueueInputCallback = { inUserData, inAQ, inBuffer, inStartTime, inNumberPacketDescriptions, inPacketDescs in
     guard let inUserData = inUserData else { return }
-    let audioManager = Unmanaged<AudioManager>.fromOpaque(inUserData).takeUnretainedValue()
+    let audioManager = Unmanaged<AudioQueueServices>.fromOpaque(inUserData).takeUnretainedValue()
 
     guard let recordingFile = audioManager.recordingFile else {
         audioManager.logger.error("Recording file is nil in input callback")
@@ -312,7 +312,7 @@ let audioQueueOutputCallback: AudioQueueOutputCallback = { inUserData, inAQ, inB
         print("Output callback: inUserData is nil")
         return
     }
-    let audioManager = Unmanaged<AudioManager>.fromOpaque(inUserData).takeUnretainedValue()
+    let audioManager = Unmanaged<AudioQueueServices>.fromOpaque(inUserData).takeUnretainedValue()
     print("Output callback called")
     audioManager.readPackets(into: inBuffer)
 }

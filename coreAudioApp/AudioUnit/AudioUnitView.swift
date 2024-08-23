@@ -37,9 +37,9 @@ struct AudioUnitView: View {
 
             Button(action: {
                 if isPlaying {
-                    audioPlayer.stopPlaying()
+                    audioManager.stopRecording()
                 } else {
-                    audioPlayer.startPlaying(filename: filename)
+                    audioManager.startPlaying(filename: filename)
                 }
                 isPlaying.toggle()
             }) {
