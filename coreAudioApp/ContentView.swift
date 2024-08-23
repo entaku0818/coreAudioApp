@@ -28,7 +28,7 @@ struct ContentView: View {
 
                 }
                 NavigationLink(destination: AudioQueueServicesView()) {
-                    Text("Go to CoreAudioView")
+                    Text("Go to AudioQueueServicesView")
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
