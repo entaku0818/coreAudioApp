@@ -211,38 +211,34 @@ class AudioUnitManager {
             return
         }
 
-        saveRecordingToFile()
-
-        isRecording = false
-        print("Recording stopped")
-    }
-
-    private func saveRecordingToFile() {
         guard let audioFile = audioFile else {
             print("No audio file to save")
             return
         }
 
         var bufferByteSize = UInt32(recordedAudioBuffer.count * MemoryLayout<Float>.size)
-        var status = AudioFileWriteBytes(
+        var fileStatus = AudioFileWriteBytes(
             audioFile,
             false,
             0,
             &bufferByteSize,
             recordedAudioBuffer
         )
-        guard status == noErr else {
+        guard fileStatus == noErr else {
             print("Failed to write audio data: \(status)")
             return
         }
 
-        status = AudioFileClose(audioFile)
+        fileStatus = AudioFileClose(audioFile)
         guard status == noErr else {
             print("Failed to close audio file: \(status)")
             return
         }
 
         print("Audio file saved successfully")
+
+        isRecording = false
+        print("Recording stopped")
     }
 
     func startPlaying(filename: String) {
